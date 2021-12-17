@@ -130,7 +130,7 @@ def make_visuals(generated_carbon,
         plt.show()
 
     plot_per_hour(generated_cao2_per_mw, "total_co2_per_MW",
-                  ylabel_text="carbon per energy ratio (g/MWh)", save_graph=save_graph)
+                  ylabel_text="carbon per energy ratio (mass/MWh)", save_graph=save_graph)
     plot_per_hour(generated_renewable_carbon_ratio, "ratio", yaxis_percentage=True,
                   ylabel_text="carbon from renewable percent", save_graph=save_graph)
 
