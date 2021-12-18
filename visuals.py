@@ -7,6 +7,7 @@ Created on Wed Dec 15
 
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
+from matplotlib.dates import DateFormatter
 import seaborn as sns
 import pandas as pd
 import numpy as np
@@ -54,8 +55,7 @@ def plot_per_hour(df, col_name, yaxis_percentage=False, ylabel_text=None, show_s
         plt.savefig(output_folder + ylabel_text.replace(' ', '_').split('_(')[0] + '.png')
     else:
         plt.show()
-
-# Full bar plot of % per energy and renewable / non_renewable in MW
+    return
 
 
 def plot_stacked_bar(df, save_graph=False, filename='graph'):
@@ -88,19 +88,47 @@ def plot_stacked_bar(df, save_graph=False, filename='graph'):
                                                  df_mean[n], df_rel[n])):
                 plt.text(i, cs - ab / 2 + i % 2 * 4, str(np.round(pc, 1)) + '%',
                          va='center', ha='center', rotation=20, fontsize=9)
-        plt.legend(loc='lower right')
-    else:
-        plt.legend(loc='upper right')  # 'center left', bbox_to_anchor=(1, 0.5))
+
+    plt.legend(loc='lower right')  # 'center left', bbox_to_anchor=(1, 0.5))
     plt.xlabel("Hour of the day")
     # plt.ylabel("percentage")
     if save_graph:
         plt.savefig(output_folder + filename + '.png')
     else:
         plt.show()
+    return
+
+
+def plot_time_series(df, save_graph=False):
+    """
+    Plot time serie
+
+    Args:
+        df (dataframe): the dataframe to plot.
+        save_graph (boolean, optional): rather the plot should be saved or only displayed.
+              Defaults to False.
+
+    Returns:
+        None.
+
+    """
+    df.index = pd.to_datetime(df.index)
+    # make a simple time serie plot:
+    ax = df.plot(subplots=True, figsize=(10, 18))
+    ax[-1].xaxis.set_major_formatter(DateFormatter("%d-%m-%Y"))
+    # Reserve space for axis labels
+    ax[-1].set_xlabel('')
+    ax[-1].set_ylabel('Carbon produced (mass)')
+    ax[3].set_ylabel('Energy emitted (MWh)')
+    if save_graph:
+        plt.savefig(output_folder + 'energy_production_time_serie.png')
+    else:
+        plt.show()
+    return
 
 
 def make_visuals(generated_carbon,
-                 generated_cao2_per_mw,
+                 generated_co2_per_mw,
                  generated_renewable_carbon_ratio,
                  generated_energy,
                  generated_energy_green_percent,
@@ -122,19 +150,17 @@ def make_visuals(generated_carbon,
         None.
 
     """
-    # make a simple time serie plot:
-    generated_carbon.plot(subplots=True, figsize=(10, 20))
-    if save_graph:
-        plt.savefig(output_folder + 'energy_production_time_serie.png')
-    else:
-        plt.show()
+    df_time_serie = pd.concat([generated_energy.drop('totalMW', axis=1), generated_carbon[['total_co2']]], axis=1)
+    df_time_serie.columns = df_time_serie.columns.str.replace('MW', '')
+    plot_time_series(df_time_serie, save_graph=save_graph)
 
-    plot_per_hour(generated_cao2_per_mw, "total_co2_per_MW",
+    plot_per_hour(generated_co2_per_mw, "total_co2_per_MW",
                   ylabel_text="carbon per energy ratio (mass/MWh)", save_graph=save_graph)
     plot_per_hour(generated_renewable_carbon_ratio, "ratio", yaxis_percentage=True,
                   ylabel_text="carbon from renewable percent", save_graph=save_graph)
 
     # make it as subplots!
+    generated_energy.columns = generated_energy.columns.str.replace("MW", " (MWh)")
     for col in generated_energy.columns:
         plot_per_hour(generated_energy, col, show_std=False, save_graph=save_graph)
 
@@ -145,4 +171,7 @@ def make_visuals(generated_carbon,
     plot_stacked_bar(gen_percent, save_graph=save_graph, filename='generated_energy_green_percent')
 
     # bar stack per sources:
+    # reorder the columns to start witht the renewables:
+    generated_e_percent = generated_e_percent[
+        ['WindMW', 'WasteMW', 'BiomassMW', 'SolarMW', 'FossilGasMW', 'FossilHardcoalMW', 'FossilOilMW']]
     plot_stacked_bar(generated_e_percent, save_graph=save_graph, filename='generated_energy_precent_per_sources')

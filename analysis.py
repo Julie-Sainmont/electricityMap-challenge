@@ -18,7 +18,7 @@ def variation_co2_kwh(df):
     variation_co2_kwh = 100 * (max(df_mean['total_co2_per_MW'])
                                - min(df_mean['total_co2_per_MW'])) / np.mean(df_mean['total_co2_per_MW'])
 
-    print('variation of carbon emission per kWh %.2f %%' % variation_co2_kwh)
+    print('variation of carbon emission per MWh %.2f %%' % variation_co2_kwh)
 
     print('the hour where the carbon emission per kWh is the lowest %.f' %
           df_mean[df_mean['total_co2_per_MW'] == min(df_mean['total_co2_per_MW'])].datetime)

@@ -65,52 +65,51 @@
 
 Denmark has two electricity zones:
 \begin{itemize}
-\item The Eastearn part of Denmark covering Zealand with islands and Bornholm is connected to the synchronous electrical grid of Norway, Sweden and Finland. The hydroelectricity produced by Sweeden and Norway provides a stable source of renewable energy that complement the domestique green production of wind energy.
-\item The Western part of Denmark is part of the synchronous grid of Continental Europe which is the largest  synchronous electrical grid in the world and includes most of the europeen union
+\item The Eastern part of Denmark, covering Zealand with nearby islands and Bornholm, is connected to the synchronous electrical grid of Norway, Sweden and Finland. The hydroelectricity produced by Sweden and Norway provides a stable source of renewable energy that complements the domestic green production of wind energy.
+\item The Western part of Denmark is part of the synchronous grid of Continental Europe which is the largest  synchronous electrical grid in the world and includes most of the European Union.
 \end{itemize}
+We will focus on the Eastern network in this report.
 
 \section{Changes of the carbon footprint of electricity throughout the day}
-\begin{figure}
-  \includegraphics[width=0.8\linewidth]{../outputs/total_MW.png}
+
+\begin{figure}[h!]
+  \includegraphics[width=0.8\linewidth]{../outputs/total.png}
   \caption{Energy produced (MWh) throughout the day on average over the year 2020.}
   \label{fig:total_kwh}
 \end{figure}
-The total energy production varies throughout the day, and is the higher during the day, picking at 1pm (figure \ref{fig:total_kwh}). The demand on the grid for electricity is therefore higher during the day than at night. However to know when it is the best time to use energy, we should looking into the energy sources and their variation accross the day.\\
+The total energy production varies throughout the day, and is the highest during the business hours, peaking at 1pm (figure \ref{fig:total_kwh}). However to decide when it is the best time to use energy based on minimizing the carbon footprint, we should dive into the different energy sources, their respective carbon emission and their output variations across the day.\\
 
-The energy produced in eastern denmark comes from both renewable sources such as biomass, solar and wind; and from large carbon emitters sources such as gas, oil and coal that come in completement when the energy consumption exceed the production of renewables.\\
-When looking at the carbon emission produced per energy (figure \ref{fig:co2_kwh}), we can see that the lowest time is during business hours (8am to 5pm), in particular around 1pm. \\
-
-\begin{figure}
+\begin{figure}[h!]
   \includegraphics[width=0.8\linewidth]{../outputs/carbon_per_energy_ratio.png}
   \caption{Carbon emitted per energy produced throughout the day on average over the year 2020.}
   \label{fig:co2_kwh}
 \end{figure}
  
-Similarly if we look at the average fraction of energy produced throughout the day from renewable version non-renewable (figure \ref{fig:per_green}), we can see a similar pattern where the highest renewable energy is produced during the day. 
-
-\begin{figure}
+\begin{figure}[h!]
   \includegraphics[width=1\linewidth]{../outputs/generated_energy_green_percent.png}
   \caption{Production of renewable and non-renewable energy produced throughout the day on average over the year 2020.}
   \label{fig:per_green}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
   \includegraphics[width=0.9\linewidth]{../outputs/generated_energy_precent_per_sources.png}
   \caption{Production of renewable and non-renewable energy produced throughout the day on average over the year 2020.}
   \label{fig:per_source}
 \end{figure}
 
-The renewable energy produced from wind and solar sources are intermittent, however the main diurne variation can be explained by the solar energy production (figure \ref{fig:per_source}, and appendix \ref{app:renewable}, figure \ref{fig:solar_kwh} for a focus on solar production)
+The energy produced in Eastern Denmark comes from both renewable sources such as biomass, solar and wind; and from large carbon emitting sources such as gas, oil and coal that support the grid when the energy consumption exceeds the production of renewable energy.
+When looking at the carbon emissions produced per energy (figure \ref{fig:co2_kwh}), we can see that the time of lowest carbon footprint is during business hours (8am to 5pm), spiking at around 1pm. The average variation of carbon emission throughout of the day is close to 20\%. It is therefore on average better to consume energy during the peak energy production hours of the day. This finding is supported by the average fraction of energy contribution from renewable and non-renewable sources (figure \ref{fig:per_green}).\\
 
+To understand this otherwise counter-intuitive finding, we can look at the production of renewable energy sources throughout the day (see appendix \ref{app:renewable} for details), and see that although the average wind production is constant through the day, the biomass, and in particular the solar energy sources peak during the day. When looking at the fraction of the total energy production from the different sources, we can see that it is the larger solar contribution to the renewable sources of energy during the middle of the day that brings the total fraction of renewable energy output to its highest level (figure \ref{fig:per_source}).
 
+\clearpage\newpage
+\section{Utilizing the data to decide when to charge at the greenest time}
+If wind and solar energy are the main contributors to the renewable electricity, is it every day that it is better to charge during the middle of the day throughout the seasons? After all, '\textit{the wind doesn't always blow and the sun doesn't always shine}', how can we know when it is the best time to charge our batteries, electrical cars, or start the next energy angry process ?  \\
+The electricityMap can provide you with an estimate of the best time to use electricity in the next 24h to empower you to effectively reduce your energy footprint. It will help you track your consumption to so you can track the impact of your effort and report it to your consumer.
 
-
-
-\section{Utilizing the data to charge at the greenest time}
-In the previous section, we show the average daily variation of the impact of energy on the carbon emission, and showed that on average throughout the day, it is better to use energy during business hours. 
-\begin{figure}
-  \includegraphics[width=0.7\linewidth]{../outputs/energy_production_time_serie.png}
-  \caption{Time serie visualisation of the energy produced in eastern denmark and the carbon emission over the year 2020. The top 6 graphs shows the energy produced from the different sources, and is expressed in kWh, while the bottom graph shows the carbon emission and is expressed in gram of CO$_2$}
+\begin{figure}[h!]
+  \includegraphics[width=0.8\linewidth]{../outputs/energy_production_time_serie.png}
+  \caption{Time serie visualization of the energy produced in Eastern Denmark and the carbon emission over the year 2020. The top 6 graphs shows the energy produced from the different sources, and is expressed in kWh, while the bottom graph shows the carbon emission and is expressed in gram of CO$_2$}
   \label{fig:time_series}
 \end{figure}
 
@@ -120,22 +119,22 @@ In the previous section, we show the average daily variation of the impact of en
 \clearpage\newpage
 \appendix
 
-\section{Renewable averable production over the day}\label{app:renewable}
+\section{Renewable average production over the day}\label{app:renewable}
 % Solar
 \begin{figure}[h!]
-  \includegraphics[width=0.8\linewidth]{../outputs/SolarWM.png}
+  \includegraphics[width=0.8\linewidth]{../outputs/Solar.png}
   \caption{Solar energy produced throughout the day in average over the year 2020.}
   \label{fig:solar_kwh}
 \end{figure}
 % Biomass
 \begin{figure}[h!]
-  \includegraphics[width=0.8\linewidth]{../outputs/BiomassWM.png}
+  \includegraphics[width=0.8\linewidth]{../outputs/Biomass.png}
   \caption{Biomass energy produced throughout the day in average over the year 2020.}
   \label{fig:biomass_kwh}
 \end{figure}
 % Wind
 \begin{figure}[h!]
-  \includegraphics[width=0.8\linewidth]{../outputs/WindWM.png}
+  \includegraphics[width=0.8\linewidth]{../outputs/Wind.png}
   \caption{Wind energy produced throughout the day in average over the year 2020.}
   \label{fig:wind_kwh}
 \end{figure}
@@ -145,19 +144,19 @@ In the previous section, we show the average daily variation of the impact of en
 \section{Non-renewable averable production over the day}\label{app:non_renewable}
 % Gas
 \begin{figure}[h!]
-  \includegraphics[width=0.8\linewidth]{../outputs/FossilGasWM.png}
+  \includegraphics[width=0.8\linewidth]{../outputs/FossilGas.png}
   \caption{Fossil gas energy produced throughout the day in average over the year 2020.}
   \label{fig:gas_kwh}
 \end{figure}
 % coal
 \begin{figure}[h!]
-  \includegraphics[width=0.8\linewidth]{../outputs/FossilHardcoalWM.png}
+  \includegraphics[width=0.8\linewidth]{../outputs/FossilHardcoal.png}
   \caption{Fossil hard coal energy produced throughout the day in average over the year 2020.}
   \label{fig:coal_kwh}
 \end{figure}
 % Oil
 \begin{figure}[h!]
-  \includegraphics[width=0.8\linewidth]{../outputs/FossilOilWM.png}
+  \includegraphics[width=0.8\linewidth]{../outputs/FossilOil.png}
   \caption{Fossil Oil energy produced throughout the day in average over the year 2020.}
   \label{fig:oil_kwh}
 \end{figure}

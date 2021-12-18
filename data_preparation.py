@@ -83,14 +83,14 @@ def data_combination(db_conn):
 
     # Generated energy in MW per type + total
     generated_energy = pd.read_sql("SELECT * FROM generated_energy", db_conn).set_index('datetime')
-    generated_energy["WindWM"] = generated_energy['WindOffshoreWM'] + generated_energy['WindOnshoreWM']
-    generated_energy.drop(['Id', "WindOffshoreWM", "WindOnshoreWM"], axis=1, inplace=True)
+    generated_energy["WindMW"] = generated_energy['WindOffshoreMW'] + generated_energy['WindOnshoreMW']
+    generated_energy.drop(['Id', "WindOffshoreMW", "WindOnshoreMW"], axis=1, inplace=True)
     type_energy_list = generated_energy.columns
-    generated_energy['total_MW'] = generated_energy.sum(axis=1)
+    generated_energy['totalMW'] = generated_energy.sum(axis=1)
 
     generated_e_percent = pd.DataFrame()
     for col in type_energy_list:
-        generated_e_percent[col] = 100 * generated_energy[col] / generated_energy['total_MW']
+        generated_e_percent[col] = 100 * generated_energy[col] / generated_energy['totalMW']
 
     generated_energy_from_renewable = df_transform_per_category(
         generated_energy, carbon_emmission, dict_corr, in_co2=False, for_renewable=True)
@@ -130,11 +130,10 @@ def data_combination(db_conn):
                                    left_index=True, right_index=True)
     generated_co2_per_mw = pd.DataFrame()
     dict_corr2 = dict_corr.copy()
-    dict_corr2["total_MW"] = 'total_co2'
+    dict_corr2["totalMW"] = 'total_co2'
     for col in dict_corr2.keys():
         generated_co2_per_mw[dict_corr2[col]] = generated_carbon_mw[dict_corr2[col]] / generated_carbon_mw[col]
     generated_co2_per_mw.rename(columns={'total_co2': 'total_co2_per_MW'}, inplace=True)
-    # generated_co2_per_mw['total_co2'] = generated_co2_per_mw.sum(axis=1)
 
     return (generated_carbon,
             generated_co2_per_mw,

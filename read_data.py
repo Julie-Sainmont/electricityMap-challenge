@@ -13,13 +13,13 @@ Export DataFrame ready for use
 import pandas as pd
 import numpy as np
 import json
-from parameters import generation_energy_file, co2_eq_file, window_outlier_detection
+from parameters import generated_energy_file, co2_eq_file, window_outlier_detection
 
 
 def outlier_detection(df, window=20):
     for col_name in df.columns:
-        df['median'] = df[col_name].rolling(window).median()
-        df['std'] = df[col_name].rolling(window).std()
+        df['median'] = df[col_name].rolling(window).median()  # .fillna(method='bfill').fillna(method='ffill')
+        df['std'] = df[col_name].rolling(window).std()  # .fillna(method='bfill').fillna(method='ffill')
         # filter setup
         df[col_name] = np.where(np.logical_or(
             pd.isnull(df['median']),
@@ -41,39 +41,38 @@ def read_generated_energy_data():
         - treatment of the columns
         - removal of the obvious outliers
     Returns:
-        generation_energy (DataFrame): The df containing the generated energy.
+        generated_energy (DataFrame): The df containing the generated energy.
 
     """
     # read the file and adjust to separate in columns
-    generation_energy = pd.read_csv(generation_energy_file, sep=",")
-    col_names = generation_energy.columns.str.split(',').tolist()
-    generation_energy = generation_energy.iloc[:, 0].str.split(',', expand=True)
-    generation_energy.columns = [item.replace('"', '') for item in col_names[0]]
+    generated_energy = pd.read_csv(generated_energy_file, sep=",")
+    col_names = generated_energy.columns.str.split(',').tolist()
+    generated_energy = generated_energy.iloc[:, 0].str.split(',', expand=True)
+    generated_energy.columns = [item.replace('"', '') for item in col_names[0]]
 
     # get the datetime from the MTU columnThe c
-    generation_energy['datetime'] = pd.to_datetime(generation_energy['MTU'].str.replace('"', '').str[0:17])
+    generated_energy['datetime'] = pd.to_datetime(generated_energy['MTU'].str.replace('"', '').str[0:17])
 
-    generation_energy = generation_energy.drop(['MTU', 'Area'], axis=1).set_index('datetime')
+    generated_energy = generated_energy.drop(['MTU', 'Area'], axis=1).set_index('datetime')
 
     # convert the value to numeric
-    for col in generation_energy.columns:
-        generation_energy[col] = generation_energy[col].str.replace('"', '')
-        generation_energy[col] = pd.to_numeric(generation_energy[col], errors='coerce')
+    for col in generated_energy.columns:
+        generated_energy[col] = generated_energy[col].str.replace('"', '')
+        generated_energy[col] = pd.to_numeric(generated_energy[col], errors='coerce')
 
     # drop the columns with only nan
-    generation_energy = generation_energy.dropna(axis=1, how='all')
+    generated_energy = generated_energy.dropna(axis=1, how='all')
 
     # simplify header
-    # generation_energy.columns = generation_energy.columns.str.replace(" - Actual Aggregated ", "")
-    generation_energy.columns = [item.replace(' ', '') + 'WM' for item in list(
-        zip(*generation_energy.columns.str.split("  - ")))[0]]
+    generated_energy.columns = [item.replace(' ', '') + 'MW' for item in list(
+        zip(*generated_energy.columns.str.split("  - ")))[0]]
 
     # remove outlier
     # clearly visible on this time serie visualisation: generated_energy.plot(subplots=True, figsize=(10, 20))
-    generation_energy_cleaned = outlier_detection(generation_energy, window=window_outlier_detection)
-    # check that they are removed: generation_energy_cleaned.plot(subplots=True, figsize=(10, 20))
+    generated_energy_cleaned = outlier_detection(generated_energy, window=window_outlier_detection)
+    # check that they are removed: generated_energy_cleaned.plot(subplots=True, figsize=(10, 20))
 
-    return generation_energy_cleaned.fillna(0)
+    return generated_energy_cleaned.fillna(0)
 
 
 def read_json():
