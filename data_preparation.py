@@ -84,7 +84,7 @@ def data_combination(db_conn):
     # Generated energy in MW per type + total
     generated_energy = pd.read_sql("SELECT * FROM generated_energy", db_conn).set_index('datetime')
     generated_energy["WindMW"] = generated_energy['WindOffshoreMW'] + generated_energy['WindOnshoreMW']
-    generated_energy.drop(['Id', "WindOffshoreMW", "WindOnshoreMW"], axis=1, inplace=True)
+    generated_energy.drop(['Id', "WindOffshoreMW", "WindOnshoreMW", 'WasteMW'], axis=1, inplace=True)
     type_energy_list = generated_energy.columns
     generated_energy['totalMW'] = generated_energy.sum(axis=1)
 

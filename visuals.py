@@ -173,5 +173,5 @@ def make_visuals(generated_carbon,
     # bar stack per sources:
     # reorder the columns to start witht the renewables:
     generated_e_percent = generated_e_percent[
-        ['WindMW', 'WasteMW', 'BiomassMW', 'SolarMW', 'FossilGasMW', 'FossilHardcoalMW', 'FossilOilMW']]
+        ['WindMW', 'BiomassMW', 'SolarMW', 'FossilGasMW', 'FossilHardcoalMW', 'FossilOilMW']]
     plot_stacked_bar(generated_e_percent, save_graph=save_graph, filename='generated_energy_precent_per_sources')
