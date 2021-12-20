@@ -18,7 +18,6 @@ dict_corr = {
     'FossilHardcoalMW': "coal",
     'FossilOilMW': "oil",
     'SolarMW': "solar",
-    'WasteMW': "biomass",
     'WindMW': "wind"
 }
 
