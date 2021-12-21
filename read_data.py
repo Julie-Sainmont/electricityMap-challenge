@@ -18,8 +18,8 @@ from parameters import generated_energy_file, co2_eq_file, window_outlier_detect
 
 def outlier_detection(df, window=20):
     for col_name in df.columns:
-        df['median'] = df[col_name].rolling(window).median()  # .fillna(method='bfill').fillna(method='ffill')
-        df['std'] = df[col_name].rolling(window).std()  # .fillna(method='bfill').fillna(method='ffill')
+        df['median'] = df[col_name].rolling(window).median()
+        df['std'] = df[col_name].rolling(window).std()
         # filter setup
         df[col_name] = np.where(np.logical_or(
             pd.isnull(df['median']),
