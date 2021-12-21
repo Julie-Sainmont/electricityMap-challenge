@@ -77,8 +77,8 @@ def plot_stacked_bar(df, save_graph=False, filename='graph'):
         mark_right=True,
         figsize=(10, 7),
         color=color_palette)
-    fmt = '%.0f%%'  # Format you want the ticks, e.g. '40%'
-    xticks = mtick.FormatStrFormatter(fmt)
+    # format the ylabel to have it in %
+    xticks = mtick.FormatStrFormatter('%.0f%%')
     ax.yaxis.set_major_formatter(xticks)
     if len(df_mean.columns) == 3:
         df_rel = df_mean[df_mean.columns[1:]]
@@ -89,9 +89,8 @@ def plot_stacked_bar(df, save_graph=False, filename='graph'):
                 plt.text(i, cs - ab / 2 + i % 2 * 4, str(np.round(pc, 1)) + '%',
                          va='center', ha='center', rotation=20, fontsize=9)
 
-    plt.legend(loc='lower right')  # 'center left', bbox_to_anchor=(1, 0.5))
+    plt.legend(loc='lower right')
     plt.xlabel("Hour of the day")
-    # plt.ylabel("percentage")
     if save_graph:
         plt.savefig(output_folder + filename + '.png')
     else:
@@ -170,8 +169,8 @@ def make_visuals(generated_carbon,
     gen_percent = generated_energy_green_percent[per_col]
     plot_stacked_bar(gen_percent, save_graph=save_graph, filename='generated_energy_green_percent')
 
-    # bar stack per sources:
-    # reorder the columns to start witht the renewables:
+    # Stacked bar per sources:
+    # re-order the columns to start witht the renewables:
     generated_e_percent = generated_e_percent[
         ['WindMW', 'BiomassMW', 'SolarMW', 'FossilGasMW', 'FossilHardcoalMW', 'FossilOilMW']]
     plot_stacked_bar(generated_e_percent, save_graph=save_graph, filename='generated_energy_precent_per_sources')

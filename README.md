@@ -2,6 +2,7 @@
 
 ## Folder structure
 The python code is present in the main folder.\
+
 Subfolders:
  - inputs: contains the data extract used for the analysis. They come from outside sources (ENTSO-e and electricityMap git repo)\
  - data: contains the database file created with the data imported\
@@ -22,6 +23,7 @@ The columns were not being separated into columns automatically so some preproce
 
 #### Treatment on the columns
 The datetime is extracted from the MTU columns and allocated to the beginning of the hour of each measurement.\
+
 All the numeric columns are converted to numeric (string beforehand).\
 
 The time series visualisation shows a peak of consumption for the gas and the hard coal:
