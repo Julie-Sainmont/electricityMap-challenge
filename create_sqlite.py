@@ -9,7 +9,6 @@ Create the database from the imported data
 """
 
 import sqlite3
-# import pandas as pd
 
 from read_data import read_json, read_generated_energy_data
 from parameters import database_file
@@ -80,5 +79,4 @@ def create_db():
     # fill the table
     type_classification.to_sql('type_classification', db_conn, if_exists='append', index=False)
 
-    # db_conn.close()
     return db_conn
