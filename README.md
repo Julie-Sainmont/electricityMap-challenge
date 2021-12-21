@@ -2,26 +2,29 @@
 
 ## Folder structure
 The python code is present in the main folder.\
-inputs: contains the data extract used for the analysis. They come from outside sources (ENTSO-e and electricityMap git repo)\
-data: contains the database file created with the data imported\
-outputs: the outputs files from the code, it contains mainly the plots/visuls\
-report: the LaTeX code to produce the report
+
+Subfolders:
+ - inputs: contains the data extract used for the analysis. They come from outside sources (ENTSO-e and electricityMap git repo)\
+ - data: contains the database file created with the data imported\
+ - outputs: contains the outputs files from the code, it contains mainly the plots/visuls\
+ - report: contains the LaTeX code to produce the report
 
 ## Python code
-The data extract, database creating, fetch, data prepaparation and visualisation are run by running the main.py code.\
-Export of the plots is controled by the parameters save_graph paramter in the parameters.py file.
+The data extract, database creation, fetching, data prepaparation and visualisation are run by compiling the main.py code.\
+The plots export is controled by the parameters save_graph parameter in the parameters.py file.
 
 ### Clearning of the generated energy data
 
 #### Read the csv
 The columns were not being separated into columns automatically so some preprocessing was done:
- - the column names get extracted separately to transformed into list of header,
+ - the column names get extracted separately to be transformed into list of headers,
  - the data is then split into columns,
- - the headers are reallocated to the data
+ - the headers are reallocated to the data.
 
 #### Treatment on the columns
 The datetime is extracted from the MTU columns and allocated to the beginning of the hour of each measurement.\
-All the numeric columns are converted to numeric (string before).\
+
+All the numeric columns are converted to numeric (string beforehand).\
 
 The time series visualisation shows a peak of consumption for the gas and the hard coal:
  - the outliers are removed with rolling windows - disregarding everything that is outside of 3 times the standard deviation
